@@ -4,12 +4,12 @@ import streamlit as st
 import pandas as pd
 from openai import OpenAI
 
-# 加载密钥
 load_dotenv()
-API_KEY = os.getenv("GEMINI_API_KEY")
-BASE_URL = os.getenv("GEMINI_BASE_URL")
 
-client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
+client = OpenAI(
+    api_key=os.getenv("ZHIPU_API_KEY"),
+    base_url="https://open.bigmodel.cn/api/paas/v4/"
+)
 
 st.set_page_config(page_title="AI数据分析助手", page_icon="📊")
 st.title("📊 AI数据分析助手")
@@ -47,7 +47,7 @@ if uploaded_file:
             """
 
             response = client.chat.completions.create(
-                model="gemini-2.5-flash",
+                model="glm-4-flash",
                 messages=[
                     {"role": "system", "content": "你是一个数据分析专家。请用中文分析数据，先给出整体结论，再列出关键发现，最后给出3条具体建议。格式清晰，重点突出。"},
                     {"role": "user", "content": f"请分析以下数据：\n{data_info}"}
